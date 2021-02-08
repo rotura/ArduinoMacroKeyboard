@@ -2,13 +2,13 @@
 Arduino based mini macro keyboard configurable with a Java App (https://github.com/rotura/ArduinoMacroController) after first load of the sketch.
 
 ## Configuration:
-Apart of the Java App, the Arduino can be configured throw the serial por with the following commands:
+Apart of the Java App, the Arduino can be configured throw the serial por with the following commands (without "):
 - **Return actual configuration**: "&".
-- **Send a configuration to store in variable**: "key_to_configure,value#". More than one sequence can be sent in the same Serial line.
+- **Send a configuration to store in variable**: "**key_to_configure,value#**". More than one sequence can be sent in the same Serial line.
   - **key_to_configure**: An integer from 0 to 5 for key configuration or "R", "G" or "B" for RGB led configuration.
   - **value**: Value to store in the key o led:
-    - **Key**: The combination of keys that will be send by the arduino when the key is pressed. Example: "0,ctrl+1#".
-    - **RGB**: Integer number between 0 and 255: Example: "R,200#"
+    - **Key**: The combination of keys that will be send by the arduino when the key is pressed. Example: "**0,ctrl+1#**".
+    - **RGB**: Integer number between 0 and 255: Example: "**R,200#**"
 - **Send a configuration to store in the EEPROM**: Just change the final "#" of the command for a "%".
 
 ## Keys configuration available:
@@ -27,7 +27,7 @@ Apart of the Java App, the Arduino can be configured throw the serial por with t
   - **Tab**: "tab".
   - **Esc**: "esc".
   - **F1-F24**: "F1", "F2", etc. Only upper case work. Lower case will send it as Raw text
-- **Combinations**: Combination of keys pressed. All **Special keys** can be combined with single keys or between them using "+" as separator. Example: "ctrl+shift+t", "alt+tab", "ctrl+alt+F1".
+- **Combinations**: Combination of keys pressed. All **Special keys** can be combined with single keys or between them using "+" as separator. Example: "**ctrl+shift+t**", "**alt+tab**", "**ctrl+alt+F1**".
 
 ## Hardware:
 - Microcontroller: Arduino Leonardo, Arduino Pro micro or compatible (based on Leonardo).
