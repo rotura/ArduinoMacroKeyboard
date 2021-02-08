@@ -3,13 +3,13 @@ Arduino based mini macro keyboard configurable with a Java App (https://github.c
 
 ## Configuration:
 Apart of the Java App, the Arduino can be configured throw the serial por with the following commands:
-- Return actual configuration: "&".
-- Send a configuration to store in variable: "key_to_configure,value#". More than one sequence can be sent in the same Serial line.
- - key_to_configure: An integer from 0 to 5 for key configuration or "R", "G" or "B" for RGB led configuration.
- - value: Value to store in the key o led:
-  - Key: The combination of keys that will be send by the arduino when the key is pressed. Example: "0,ctrl+1#".
-  - RGB: Integer number between 0 and 255: Example: "R,200#"
-- Send a configuration to store in the EEPROM: Just change the final "#" of the command for a "%".
+- **Return actual configuration**: "&".
+- **Send a configuration to store in variable**: "key_to_configure,value#". More than one sequence can be sent in the same Serial line.
+  - **key_to_configure**: An integer from 0 to 5 for key configuration or "R", "G" or "B" for RGB led configuration.
+  - **value**: Value to store in the key o led:
+    - **Key**: The combination of keys that will be send by the arduino when the key is pressed. Example: "0,ctrl+1#".
+    - **RGB**: Integer number between 0 and 255: Example: "R,200#"
+- **Send a configuration to store in the EEPROM**: Just change the final "#" of the command for a "%".
 
 ## Keys configuration available:
 - **Raw text**: Up to 19 characters (For EEPROM saving, using more only store the data on the variables).
