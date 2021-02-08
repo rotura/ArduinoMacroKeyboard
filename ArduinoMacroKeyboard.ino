@@ -60,11 +60,9 @@ void setup() {
   pinMode(KEY_R, OUTPUT);
   pinMode(KEY_G, OUTPUT);
   pinMode(KEY_B, OUTPUT);
-  //Serial.println("Connected. Getting default Configuration...");
   chargeDefaultConf();
   led();
   Keyboard.begin();
-  //Serial.println("Started");
 }
 
 void loop() {
@@ -91,6 +89,7 @@ void pressKeys(){
     key1Pressed_l = key1Pressed;
   } else if(key1Pressed && !key1Pressed_l){
     key1Pressed_l = key1Pressed;
+    keyboardRelease(0);
   }
   
   if(!key2Pressed && key2Pressed_l){
@@ -98,6 +97,7 @@ void pressKeys(){
     key2Pressed_l = key2Pressed;
   } else if(key2Pressed && !key2Pressed_l){
     key2Pressed_l = key2Pressed;
+    keyboardRelease(1);
   }
   
   if(!key3Pressed && key3Pressed_l){
@@ -105,6 +105,7 @@ void pressKeys(){
     key3Pressed_l = key3Pressed;
   } else if(key3Pressed && !key3Pressed_l){
     key3Pressed_l = key3Pressed;
+    keyboardRelease(2);
   }
 
   if(!key4Pressed && key4Pressed_l){
@@ -112,6 +113,7 @@ void pressKeys(){
     key4Pressed_l = key4Pressed;
   } else if(key4Pressed && !key4Pressed_l){
     key4Pressed_l = key4Pressed;
+    keyboardRelease(3);
   }
 
   if(!key5Pressed && key5Pressed_l){
@@ -119,6 +121,7 @@ void pressKeys(){
     key5Pressed_l = key5Pressed;
   } else if(key5Pressed && !key5Pressed_l){
     key5Pressed_l = key5Pressed;
+    keyboardRelease(4);
   }
 
   if(!key6Pressed && key6Pressed_l){
@@ -126,10 +129,12 @@ void pressKeys(){
     key6Pressed_l = key1Pressed;
   } else if(key6Pressed && !key6Pressed_l){
     key6Pressed_l = key6Pressed;
+    keyboardRelease(5);
   }
 
   if(key1Pressed || key2Pressed || key3Pressed 
     || key4Pressed || key5Pressed || key6Pressed){
+    // Delay to difference doble click and hold  
     delay(10);
   }
 }
@@ -212,9 +217,7 @@ void serialConfiguration(){
           writeStringToEEPROM(RGB_EEPROM + 2 * (RGB_SIZE + 1), tempWord + "#");
         rgbChange = 1;
       break;
-    }
-    //Serial.println("Key " + String(keyConfigured) + " configured as: " + tempWord);  
-     
+    }     
   }
 }
 
@@ -226,8 +229,6 @@ void sendConfiguration(){
   Serial.print(String('G') + "," + rgb[1] + "#");  
   Serial.print(String('B') + "," + rgb[2] + "#");  
   Serial.print("&");  
-
-  keyboardPrintCommand("ctrl+alt+supr");
 }
 
 void chargeDefaultConf(){
@@ -296,85 +297,22 @@ void writeStringToEEPROM(int addrOffset, String strToWrite)
 ////////////////
 void keyboardPrint(int key){
     String value = keyValues[key];
-    String trimValue = value;
-    trimValue.trim();
-    if(value.equals("+") == 0){
+    if(value.indexOf("+") > 0){
       keyboardPressCommand(value);
-    } else if(trimValue == "" || value.equals("space")){
-      Keyboard.write(0x20);  
-    } else if(value.equals("ctrl")){
-      Keyboard.write(KEY_LEFT_CTRL);
-    } else if(value.equals("alt")){
-      Keyboard.write(KEY_LEFT_ALT);
-    } else if(value.equals("shift")){
-      Keyboard.write(KEY_LEFT_SHIFT);
-    } else if(value.equals("tab")){
-      Keyboard.write(KEY_TAB);
-    } else if(value.equals("gui")){
-      Keyboard.write(KEY_LEFT_GUI);
-    } else if(value.equals("esc")){
-      Keyboard.write(KEY_ESC);
-    } else if(value.equals("enter")|| value.equals("return")){
-      Keyboard.write(KEY_RETURN);  
-    } else if(value.equals("larrow")){
-      Keyboard.write(KEY_LEFT_ARROW);  
-    } else if(value.equals("rarrow")){
-      Keyboard.write(KEY_RIGHT_ARROW);  
-    } else if(value.equals("uarrow")){
-      Keyboard.write(KEY_UP_ARROW);  
-    } else if(value.equals("darrow")){
-      Keyboard.write(KEY_DOWN_ARROW);  
-    } else if(value.equals("f3")){
-      Keyboard.write(KEY_F3);  
-    } else if(value.equals("f4")){
-      Keyboard.write(KEY_F4);  
-    } else if(value.equals("f5")){
-      Keyboard.write(KEY_F5);  
-    } else if(value.equals("f6")){
-      Keyboard.write(KEY_F6);  
-    } else if(value.equals("f7")){
-      Keyboard.write(KEY_F7);  
-    } else if(value.equals("f8")){
-      Keyboard.write(KEY_F8);  
-    } else if(value.equals("f9")){
-      Keyboard.write(KEY_F9);  
-    } else if(value.equals("f10")){
-      Keyboard.write(KEY_F10);  
-    } else if(value.equals("f11")){
-      Keyboard.write(KEY_F11);  
-    } else if(value.equals("f12")){
-      Keyboard.write(KEY_F12);  
-    } else if(value.equals("f13")){
-      Keyboard.write(KEYCODE_F13);  
-    } else if(value.equals("f14")){
-      Keyboard.write(KEYCODE_F14);  
-    } else if(value.equals("f15")){
-      Keyboard.write(KEYCODE_F15);  
-    } else if(value.equals("f16")){
-      Keyboard.write(KEYCODE_F16);  
-    } else if(value.equals("f17")){
-      Keyboard.write(KEYCODE_F17);  
-    } else if(value.equals("f18")){
-      Keyboard.write(KEYCODE_F18);  
-    } else if(value.equals("f19")){
-      Keyboard.write(KEYCODE_F19);  
-    } else if(value.equals("f20")){
-      Keyboard.write(KEYCODE_F20);  
-    } else if(value.equals("f21")){
-      Keyboard.write(KEYCODE_F21);  
-    } else if(value.equals("f22")){
-      Keyboard.write(KEYCODE_F22);  
-    } else if(value.equals("f23")){
-      Keyboard.write(KEYCODE_F23);  
-    } else if(value.equals("f24")){
-      Keyboard.write(KEYCODE_F24);  
-    } else if(value.equals("f1")){
-      Keyboard.write(KEY_F1);  
-    } else if(value.equals("f2")){
-      Keyboard.write(KEY_F2);  
+    } else if(containSpecialKey(value) || value.length() == 1){
+      pressKey(value);  
     } else {
       Keyboard.print(value);
     }
+  }
+
+void keyboardRelease(int key){
+    String value = keyValues[key];
+    if(value.indexOf("+") > 0){
+      keyboardReleaseCommand(value);
+    } else if(containSpecialKey(value) || value.length() == 1){
+     releaseKey(value);  
+    } 
   }
 
   void keyboardPressCommand(String command){
@@ -386,7 +324,17 @@ void keyboardPrint(int key){
       pressKey(pch);
       pch = strtok (0, "+");
     }
-    Keyboard.releaseAll();
+  }
+
+  void keyboardReleaseCommand(String command){
+    char str[command.length() + 1];
+    command.toCharArray(str, command.length()+1);
+    char * pch = strtok (str,"+");
+    while (pch != NULL)
+    {
+      releaseKey(pch);
+      pch = strtok (0, "+");
+    }
   }
 
   void pressKey(String value){
@@ -467,6 +415,95 @@ void keyboardPrint(int key){
     }
   }
 
+  void releaseKey(String value){
+    if(value.equals("ctrl")){
+      Keyboard.release(KEY_LEFT_CTRL);
+    } else if(value.equals("alt")){
+      Keyboard.release(KEY_LEFT_ALT);
+    } else if(value.equals("shift")){
+      Keyboard.release(KEY_LEFT_SHIFT);
+    } else if(value.equals("tab")){
+      Keyboard.release(KEY_TAB);
+    } else if(value.equals("gui")){
+      Keyboard.release(KEY_LEFT_GUI);
+    } else if(value.equals("esc")){
+      Keyboard.release(KEY_ESC);
+    } else if(value.equals("space")){
+      Keyboard.release(0x20);  
+    } else if(value.equals("enter")|| value.equals("return")){
+      Keyboard.release(KEY_RETURN);  
+    } else if(value.equals("larrow")){
+      Keyboard.release(KEY_LEFT_ARROW);  
+    } else if(value.equals("rarrow")){
+      Keyboard.release(KEY_RIGHT_ARROW);  
+    } else if(value.equals("uarrow")){
+      Keyboard.release(KEY_UP_ARROW);  
+    } else if(value.equals("darrow")){
+      Keyboard.release(KEY_DOWN_ARROW);  
+    } else if(value.equals("f3")){
+      Keyboard.release(KEY_F3);  
+    } else if(value.equals("f4")){
+      Keyboard.release(KEY_F4);  
+    } else if(value.equals("f5")){
+      Keyboard.release(KEY_F5);  
+    } else if(value.equals("f6")){
+      Keyboard.release(KEY_F6);  
+    } else if(value.equals("f7")){
+      Keyboard.release(KEY_F7);  
+    } else if(value.equals("f8")){
+      Keyboard.release(KEY_F8);  
+    } else if(value.equals("f9")){
+      Keyboard.release(KEY_F9);  
+    } else if(value.equals("f10")){
+      Keyboard.release(KEY_F10);  
+    } else if(value.equals("f11")){
+      Keyboard.release(KEY_F11);  
+    } else if(value.equals("f12")){
+      Keyboard.release(KEY_F12);  
+    } else if(value.equals("f13")){
+      Keyboard.release(KEYCODE_F13);  
+    } else if(value.equals("f14")){
+      Keyboard.release(KEYCODE_F14);  
+    } else if(value.equals("f15")){
+      Keyboard.release(KEYCODE_F15);  
+    } else if(value.equals("f16")){
+      Keyboard.release(KEYCODE_F16);  
+    } else if(value.equals("f17")){
+      Keyboard.release(KEYCODE_F17);  
+    } else if(value.equals("f18")){
+      Keyboard.release(KEYCODE_F18);  
+    } else if(value.equals("f19")){
+      Keyboard.release(KEYCODE_F19);  
+    } else if(value.equals("f20")){
+      Keyboard.release(KEYCODE_F20);  
+    } else if(value.equals("f21")){
+      Keyboard.release(KEYCODE_F21);  
+    } else if(value.equals("f22")){
+      Keyboard.release(KEYCODE_F22);  
+    } else if(value.equals("f23")){
+      Keyboard.release(KEYCODE_F23);  
+    } else if(value.equals("f24")){
+      Keyboard.release(KEYCODE_F24);  
+    } else if(value.equals("f1")){
+      Keyboard.release(KEY_F1);  
+    } else if(value.equals("f2")){
+      Keyboard.release(KEY_F2);  
+    } else {
+      Keyboard.release(value[0]);  
+    }
+  }
+
+  boolean containSpecialKey(String value){
+     if(value.equals("f1") || value.equals("f2")|| value.equals("f24")|| value.equals("f23")|| value.equals("f22")|| value.equals("f21")|| value.equals("f20")|| value.equals("f19")|| value.equals("f18")
+            || value.equals("f17")|| value.equals("f16")|| value.equals("f15")|| value.equals("f14")|| value.equals("f13")|| value.equals("f12")|| value.equals("f11")|| value.equals("f10")
+            || value.equals("f9")|| value.equals("f8")|| value.equals("f7")|| value.equals("f6")|| value.equals("f5")|| value.equals("f4")|| value.equals("f3")|| value.equals("darrow")
+            || value.equals("uarrow")|| value.equals("rarrow")|| value.equals("larrow")|| value.equals("enter")|| value.equals("return")|| value.equals("esc")|| value.equals("gui")|| value.equals("tab")
+            || value.equals("shift")|| value.equals("alt")|| value.equals("ctrl") || value.equals("space")){
+      return true;    
+    } else {
+      return false;
+    }
+  }
 
   void led(){
     rgbChange = 0;
