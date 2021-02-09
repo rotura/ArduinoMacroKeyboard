@@ -22,6 +22,7 @@ The Keyboard Layout is US. Some special characteres like "ñ" can't be used.
   - **Up arrow**: "uarrow".
   - **Down arrow**: "darrow".
   - **Control**: "ctrl".
+  - **Esc**: "esc".
   - **Shift**: "shift".
   - **Alt**: "alt".
   - **Windows or Cmd(Mac)**: "gui".

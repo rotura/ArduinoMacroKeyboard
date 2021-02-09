@@ -1,18 +1,5 @@
 #include <HID-Project.h>
 #include <EEPROM.h>
-#define KEY_F13 0x68
-#define KEY_F14 0x69
-#define KEY_F15 0x6A
-#define KEY_F16 0x6B
-#define KEY_F17 0x6C
-#define KEY_F18 0x6D
-#define KEY_F19 0x6E
-#define KEY_F20 0x6F
-#define KEY_F21 0x70
-#define KEY_F22 0x71
-#define KEY_F23 0x72
-#define KEY_F24 0x73
-
 
 String keyValues[] = {"z","x","space","enter","uarrow","darrow" };
 int rgb[] = {255,255,255};
