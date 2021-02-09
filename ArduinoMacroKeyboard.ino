@@ -1,17 +1,18 @@
+#include <HID-Project.h>
 #include <EEPROM.h>
-#include <Keyboard.h>
-#define KEYCODE_F13 0x68
-#define KEYCODE_F14 0x69
-#define KEYCODE_F15 0x6A
-#define KEYCODE_F16 0x6B
-#define KEYCODE_F17 0x6C
-#define KEYCODE_F18 0x6D
-#define KEYCODE_F19 0x6E
-#define KEYCODE_F20 0x6F
-#define KEYCODE_F21 0x70
-#define KEYCODE_F22 0x71
-#define KEYCODE_F23 0x72
-#define KEYCODE_F24 0x73
+#define KEY_F13 0x68
+#define KEY_F14 0x69
+#define KEY_F15 0x6A
+#define KEY_F16 0x6B
+#define KEY_F17 0x6C
+#define KEY_F18 0x6D
+#define KEY_F19 0x6E
+#define KEY_F20 0x6F
+#define KEY_F21 0x70
+#define KEY_F22 0x71
+#define KEY_F23 0x72
+#define KEY_F24 0x73
+
 
 String keyValues[] = {"z","x","space","enter","uarrow","darrow" };
 int rgb[] = {255,255,255};
@@ -63,6 +64,7 @@ void setup() {
   chargeDefaultConf();
   led();
   Keyboard.begin();
+  Consumer.begin();
 }
 
 void loop() {
@@ -134,7 +136,7 @@ void pressKeys(){
 
   if(key1Pressed || key2Pressed || key3Pressed 
     || key4Pressed || key5Pressed || key6Pressed){
-    // Delay to difference doble click and hold  
+    // Delay to difference double click and hold  
     delay(10);
   }
 }
@@ -362,54 +364,60 @@ void keyboardRelease(int key){
       Keyboard.press(KEY_UP_ARROW);  
     } else if(value.equals("darrow")){
       Keyboard.press(KEY_DOWN_ARROW);  
-    } else if(value.equals("f3")){
+    } else if(value.equals("F3")){
       Keyboard.press(KEY_F3);  
-    } else if(value.equals("f4")){
+    } else if(value.equals("F4")){
       Keyboard.press(KEY_F4);  
-    } else if(value.equals("f5")){
+    } else if(value.equals("F5")){
       Keyboard.press(KEY_F5);  
-    } else if(value.equals("f6")){
+    } else if(value.equals("F6")){
       Keyboard.press(KEY_F6);  
-    } else if(value.equals("f7")){
+    } else if(value.equals("F7")){
       Keyboard.press(KEY_F7);  
-    } else if(value.equals("f8")){
+    } else if(value.equals("F8")){
       Keyboard.press(KEY_F8);  
-    } else if(value.equals("f9")){
+    } else if(value.equals("F9")){
       Keyboard.press(KEY_F9);  
-    } else if(value.equals("f10")){
+    } else if(value.equals("F10")){
       Keyboard.press(KEY_F10);  
-    } else if(value.equals("f11")){
+    } else if(value.equals("F11")){
       Keyboard.press(KEY_F11);  
-    } else if(value.equals("f12")){
+    } else if(value.equals("F12")){
       Keyboard.press(KEY_F12);  
-    } else if(value.equals("f13")){
-      Keyboard.press(KEYCODE_F13);  
-    } else if(value.equals("f14")){
-      Keyboard.press(KEYCODE_F14);  
-    } else if(value.equals("f15")){
-      Keyboard.press(KEYCODE_F15);  
-    } else if(value.equals("f16")){
-      Keyboard.press(KEYCODE_F16);  
-    } else if(value.equals("f17")){
-      Keyboard.press(KEYCODE_F17);  
-    } else if(value.equals("f18")){
-      Keyboard.press(KEYCODE_F18);  
-    } else if(value.equals("f19")){
-      Keyboard.press(KEYCODE_F19);  
-    } else if(value.equals("f20")){
-      Keyboard.press(KEYCODE_F20);  
-    } else if(value.equals("f21")){
-      Keyboard.press(KEYCODE_F21);  
-    } else if(value.equals("f22")){
-      Keyboard.press(KEYCODE_F22);  
-    } else if(value.equals("f23")){
-      Keyboard.press(KEYCODE_F23);  
-    } else if(value.equals("f24")){
-      Keyboard.press(KEYCODE_F24);  
-    } else if(value.equals("f1")){
+    } else if(value.equals("F13")){
+      Keyboard.press(KEY_F13);  
+    } else if(value.equals("F14")){
+      Keyboard.press(KEY_F14);  
+    } else if(value.equals("F15")){
+      Keyboard.press(KEY_F15);  
+    } else if(value.equals("F16")){
+      Keyboard.press(KEY_F16);  
+    } else if(value.equals("F17")){
+      Keyboard.press(KEY_F17);  
+    } else if(value.equals("F18")){
+      Keyboard.press(KEY_F18);  
+    } else if(value.equals("F19")){
+      Keyboard.press(KEY_F19);  
+    } else if(value.equals("F20")){
+      Keyboard.press(KEY_F20);  
+    } else if(value.equals("F21")){
+      Keyboard.press(KEY_F21);  
+    } else if(value.equals("F22")){
+      Keyboard.press(KEY_F22);  
+    } else if(value.equals("F23")){
+      Keyboard.press(KEY_F23);  
+    } else if(value.equals("F24")){
+      Keyboard.press(KEY_F24);  
+    } else if(value.equals("F1")){
       Keyboard.press(KEY_F1);  
     } else if(value.equals("f2")){
       Keyboard.press(KEY_F2);  
+    } else if(value.equals("mute")){
+      Consumer.write(MEDIA_VOL_MUTE);  
+    } else if(value.equals("volup")){
+      Consumer.press(MEDIA_VOL_UP);
+    } else if(value.equals("voldown")){
+      Consumer.press(MEDIA_VOL_DOWN);  
     } else {
       Keyboard.press(value[0]);  
     }
@@ -440,65 +448,69 @@ void keyboardRelease(int key){
       Keyboard.release(KEY_UP_ARROW);  
     } else if(value.equals("darrow")){
       Keyboard.release(KEY_DOWN_ARROW);  
-    } else if(value.equals("f3")){
+    } else if(value.equals("F3")){
       Keyboard.release(KEY_F3);  
-    } else if(value.equals("f4")){
+    } else if(value.equals("F4")){
       Keyboard.release(KEY_F4);  
-    } else if(value.equals("f5")){
+    } else if(value.equals("F5")){
       Keyboard.release(KEY_F5);  
-    } else if(value.equals("f6")){
+    } else if(value.equals("F6")){
       Keyboard.release(KEY_F6);  
-    } else if(value.equals("f7")){
+    } else if(value.equals("F7")){
       Keyboard.release(KEY_F7);  
-    } else if(value.equals("f8")){
+    } else if(value.equals("F8")){
       Keyboard.release(KEY_F8);  
-    } else if(value.equals("f9")){
+    } else if(value.equals("F9")){
       Keyboard.release(KEY_F9);  
-    } else if(value.equals("f10")){
+    } else if(value.equals("F10")){
       Keyboard.release(KEY_F10);  
-    } else if(value.equals("f11")){
+    } else if(value.equals("F11")){
       Keyboard.release(KEY_F11);  
-    } else if(value.equals("f12")){
+    } else if(value.equals("F12")){
       Keyboard.release(KEY_F12);  
-    } else if(value.equals("f13")){
-      Keyboard.release(KEYCODE_F13);  
-    } else if(value.equals("f14")){
-      Keyboard.release(KEYCODE_F14);  
-    } else if(value.equals("f15")){
-      Keyboard.release(KEYCODE_F15);  
-    } else if(value.equals("f16")){
-      Keyboard.release(KEYCODE_F16);  
-    } else if(value.equals("f17")){
-      Keyboard.release(KEYCODE_F17);  
-    } else if(value.equals("f18")){
-      Keyboard.release(KEYCODE_F18);  
-    } else if(value.equals("f19")){
-      Keyboard.release(KEYCODE_F19);  
-    } else if(value.equals("f20")){
-      Keyboard.release(KEYCODE_F20);  
-    } else if(value.equals("f21")){
-      Keyboard.release(KEYCODE_F21);  
-    } else if(value.equals("f22")){
-      Keyboard.release(KEYCODE_F22);  
-    } else if(value.equals("f23")){
-      Keyboard.release(KEYCODE_F23);  
-    } else if(value.equals("f24")){
-      Keyboard.release(KEYCODE_F24);  
-    } else if(value.equals("f1")){
+    } else if(value.equals("F13")){
+      Keyboard.release(KEY_F13);  
+    } else if(value.equals("F14")){
+      Keyboard.release(KEY_F14);  
+    } else if(value.equals("F15")){
+      Keyboard.release(KEY_F15);  
+    } else if(value.equals("F16")){
+      Keyboard.release(KEY_F16);  
+    } else if(value.equals("F17")){
+      Keyboard.release(KEY_F17);  
+    } else if(value.equals("F18")){
+      Keyboard.release(KEY_F18);  
+    } else if(value.equals("F19")){
+      Keyboard.release(KEY_F19);  
+    } else if(value.equals("F20")){
+      Keyboard.release(KEY_F20);  
+    } else if(value.equals("F21")){
+      Keyboard.release(KEY_F21);  
+    } else if(value.equals("F22")){
+      Keyboard.release(KEY_F22);  
+    } else if(value.equals("F23")){
+      Keyboard.release(KEY_F23);  
+    } else if(value.equals("F24")){
+      Keyboard.release(KEY_F24);  
+    } else if(value.equals("F1")){
       Keyboard.release(KEY_F1);  
-    } else if(value.equals("f2")){
+    } else if(value.equals("F2")){
       Keyboard.release(KEY_F2);  
+    } else if(value.equals("volup")){
+      Consumer.release(MEDIA_VOL_UP);
+    } else if(value.equals("voldown")){
+      Consumer.release(MEDIA_VOL_DOWN); 
     } else {
       Keyboard.release(value[0]);  
     }
   }
 
   boolean containSpecialKey(String value){
-     if(value.equals("f1") || value.equals("f2")|| value.equals("f24")|| value.equals("f23")|| value.equals("f22")|| value.equals("f21")|| value.equals("f20")|| value.equals("f19")|| value.equals("f18")
-            || value.equals("f17")|| value.equals("f16")|| value.equals("f15")|| value.equals("f14")|| value.equals("f13")|| value.equals("f12")|| value.equals("f11")|| value.equals("f10")
-            || value.equals("f9")|| value.equals("f8")|| value.equals("f7")|| value.equals("f6")|| value.equals("f5")|| value.equals("f4")|| value.equals("f3")|| value.equals("darrow")
+     if(value.equals("F1") || value.equals("F2")|| value.equals("F24")|| value.equals("F23")|| value.equals("F22")|| value.equals("F21")|| value.equals("F20")|| value.equals("F19")|| value.equals("F18")
+            || value.equals("F17")|| value.equals("F16")|| value.equals("F15")|| value.equals("F14")|| value.equals("F13")|| value.equals("F12")|| value.equals("F11")|| value.equals("F10")
+            || value.equals("F9")|| value.equals("F8")|| value.equals("F7")|| value.equals("F6")|| value.equals("F5")|| value.equals("F4")|| value.equals("F3")|| value.equals("darrow")
             || value.equals("uarrow")|| value.equals("rarrow")|| value.equals("larrow")|| value.equals("enter")|| value.equals("return")|| value.equals("esc")|| value.equals("gui")|| value.equals("tab")
-            || value.equals("shift")|| value.equals("alt")|| value.equals("ctrl") || value.equals("space")){
+            || value.equals("shift")|| value.equals("alt")|| value.equals("ctrl") || value.equals("space") || value.equals("mute") || value.equals("volup") || value.equals("voldown")){
       return true;    
     } else {
       return false;
