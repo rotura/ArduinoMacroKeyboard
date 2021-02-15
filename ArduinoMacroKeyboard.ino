@@ -115,7 +115,7 @@ void pressKeys(){
 
   if(!key6Pressed && key6Pressed_l){
     keyboardPrint(5);
-    key6Pressed_l = key1Pressed;
+    key6Pressed_l = key6Pressed;
   } else if(key6Pressed && !key6Pressed_l){
     key6Pressed_l = key6Pressed;
     keyboardRelease(5);

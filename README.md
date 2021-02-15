@@ -49,6 +49,8 @@ Comming soon.
 ![Wiring diagram](https://github.com/rotura/ArduinoMacroKeyboard/blob/main/wiring_diagram.jpg)
 
 ## Changelog:
+- **v1.2**: Bug correction with key 6.
+
 - **v1.1**: Added volume controls:
 	- **"mute"**: Mute the sound.
 	- **"volup"**: Increase sound volume.
